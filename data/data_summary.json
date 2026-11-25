@@ -1,0 +1,18 @@
+{
+  "title": "European Captives Leaflet Prototype",
+  "generated_from": "BC Project Captivity Complete Location Date.csv",
+  "source_rows": 3137,
+  "mapping_records": 3105,
+  "exact_duplicate_rows_removed": 32,
+  "minimum_year": 1563,
+  "maximum_year": 1748,
+  "mappable_locations": 79,
+  "distinct_connection_pairs": 73,
+  "geography_counts": {
+    "neither": 735,
+    "origin_only": 75,
+    "captivity_only": 1367,
+    "both": 928
+  },
+  "method_note": "Lines join documented origin and captivity associations. They do not reconstruct a route. Unknown source coordinates are intentionally excluded."
+}

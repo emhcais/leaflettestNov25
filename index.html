@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototype map of documented European captive origins and captivity locations in the Mediterranean, approximately 1563–1748.">
+  <title>European Captives Map — Leaflet Prototype</title>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#records-heading">Skip to records</a>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Mediterranean Captivity Project · Prototype</p>
+      <h1>European Captives</h1>
+      <p class="subtitle">Documented origins, captivity locations, and source-backed associations</p>
+    </div>
+    <nav class="download-nav" aria-label="Data downloads">
+      <a href="data/european_captives_mapping_ready.csv" download>Mapping-ready CSV</a>
+      <a href="data/record-points.geojson" download>Point GeoJSON</a>
+      <a href="data/connections.geojson" download>Connections GeoJSON</a>
+      <a href="data/source/BC%20Project%20Captivity%20Complete%20Location%20Date.csv" download>Original CSV</a>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="Map controls and records">
+      <section class="controls" aria-labelledby="filter-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="eyebrow">Explore the evidence</p>
+            <h2 id="filter-heading">Filters</h2>
+          </div>
+          <button id="reset-filters" class="text-button" type="button">Reset</button>
+        </div>
+
+        <label class="field-label" for="record-search">Search records</label>
+        <input id="record-search" type="search" placeholder="Name, place, source, note, or ship" autocomplete="off">
+
+        <fieldset class="year-filter">
+          <legend>Year range</legend>
+          <div class="year-readout"><output id="min-year-output">—</output><span>to</span><output id="max-year-output">—</output></div>
+          <div class="range-stack" aria-label="Choose a minimum and maximum year">
+            <input id="min-year" type="range" aria-label="Minimum year">
+            <input id="max-year" type="range" aria-label="Maximum year">
+          </div>
+          <p class="field-help">Filtering uses the normalized year. Most January 1 values are treated as year-level placeholders.</p>
+        </fieldset>
+
+        <fieldset class="layer-filter">
+          <legend>Map layers</legend>
+          <label><input id="show-origins" type="checkbox" checked><span class="legend-dot origin"></span> Origins</label>
+          <label><input id="show-captivity" type="checkbox" checked><span class="legend-dot captivity"></span> Captivity locations</label>
+          <label><input id="show-connections" type="checkbox" checked><span class="legend-line"></span> Documented connections</label>
+        </fieldset>
+
+        <div id="selection-chip" class="selection-chip" hidden>
+          <span id="selection-label"></span>
+          <button id="clear-selection" type="button" aria-label="Clear map selection">×</button>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="Filtered summary">
+        <div><strong id="stat-records">—</strong><span>records</span></div>
+        <div><strong id="stat-locations">—</strong><span>locations</span></div>
+        <div><strong id="stat-connections">—</strong><span>connected records</span></div>
+        <div><strong id="stat-unmapped">—</strong><span>without a mapped point</span></div>
+      </section>
+
+      <section class="records-section" aria-labelledby="records-heading">
+        <div class="section-heading-row compact">
+          <h2 id="records-heading">Records</h2>
+          <span id="record-count" aria-live="polite"></span>
+        </div>
+        <p id="record-limit-note" class="field-help"></p>
+        <div id="record-list" class="record-list" tabindex="-1"></div>
+      </section>
+    </aside>
+
+    <section class="map-region" aria-label="Interactive map">
+      <div id="map" role="application" aria-label="Map of European captive origins and captivity locations"></div>
+      <div class="map-legend" aria-label="Map legend">
+        <strong>Map key</strong>
+        <span><i class="legend-dot origin"></i> Origin</span>
+        <span><i class="legend-dot captivity"></i> Captivity</span>
+        <span><i class="legend-line"></i> Association, not route</span>
+      </div>
+      <div id="loading" class="loading-card" role="status">Loading 3,000+ historical records…</div>
+      <div id="map-error" class="error-card" hidden></div>
+    </section>
+  </main>
+
+  <aside id="detail-panel" class="detail-panel" aria-labelledby="detail-title" aria-hidden="true">
+    <button id="close-detail" class="detail-close" type="button" aria-label="Close record details">×</button>
+    <p class="eyebrow">Historical record</p>
+    <h2 id="detail-title">Record details</h2>
+    <div id="detail-content"></div>
+  </aside>
+
+  <footer>
+    <p><strong>Interpretive caution:</strong> markers represent documented associations with places. Lines connect a recorded origin and captivity location; they do not reconstruct a journey or route. Concentrations reflect the surviving documentary sample.</p>
+    <p>Prototype data preparation is documented in <a href="README.md">README.md</a> and <a href="DATA_DICTIONARY.md">DATA_DICTIONARY.md</a>. Ambiguous historical place identifications remain unresolved or carry an explicit certainty note in the editable mapping crosswalk.</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
